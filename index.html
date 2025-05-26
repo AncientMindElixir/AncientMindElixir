@@ -76,13 +76,14 @@
 </head>
 <body>
   <div id="chatbot">
-    <img id="logo" src="https://aliciaadriani.github.io/chatbot-ancientmindelixir/logo.png" alt="AncientMind Logo" />
+    <img id="logo" src="https://ancientmindelixir.github.io/AncientMindElixir/logo.png" alt="AncientMind Logo" />
     <div id="chatlog"></div>
     <div style="display: flex;">
       <input id="userInput" type="text" placeholder="Type your message..." onkeypress="if(event.key==='Enter'){sendMessage()}" />
       <button onclick="sendMessage()">Send</button>
     </div>
   </div>
+
   <script>
     const chatlog = document.getElementById('chatlog');
     let username = '';
