@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AncientMind Elixir Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0e1a12;
+      color: #f9fafb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #chatbot {
+      background-color: #142b1e;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    #logo {
+      width: 160px;
+      margin: 0 auto 12px auto;
+      display: block;
+    }
+    #chatlog {
+      flex: 1;
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+    .message {
+      margin: 6px 0;
+      padding: 10px 14px;
+      border-radius: 16px;
+      max-width: 80%;
+      line-height: 1.4;
+    }
+    .bot {
+      background-color: #1b3c2a;
+      align-self: flex-start;
+      color: #f9fafb;
+    }
+    .user {
+      background-color: #e0fce5;
+      align-self: flex-end;
+      color: #000;
+    }
+    #userInput {
+      padding: 10px;
+      border: 1px solid #444;
+      border-radius: 12px;
+      width: 75%;
+      background-color: #f3f4f6;
+      color: #000;
+    }
+    button {
+      padding: 10px;
+      background-color: #b79453;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="chatbot">
+    <img id="logo" src="https://aliciaadriani.github.io/chatbot-ancientmindelixir/logo.png" alt="AncientMind Logo" />
+    <div id="chatlog"></div>
+    <div style="display: flex;">
+      <input id="userInput" type="text" placeholder="Type your message..." onkeypress="if(event.key==='Enter'){sendMessage()}" />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatlog = document.getElementById('chatlog');
+    let username = '';
+
+    const responses = {
+      "how many capsules": "Just 1 capsule a day, {{name}}. Simplicity and consistency bring the best results.",
+      "how should i take": "Take one capsule daily, ideally in the morning. You can say: 'I am activating the divine intelligence within me.'",
+      "forgot": "It happens! Just continue tomorrow. Try keeping the bottle near your toothbrush, {{name}}.",
+      "missed": "That’s okay! Take the next dose as usual. No need to double up.",
+      "how does it work": "It helps your pineal gland restore clarity, energy and inner vision. The shift is gentle yet powerful.",
+      "effects": "First week: clarity, restfulness, peace. After 3–4 weeks: intuition, inner strength, emotional calm.",
+      "side effects": "There are no known side effects. If anything feels off, consult your doctor to be safe.",
+      "what is this": "It’s a daily ritual to reconnect you to clarity and divine intelligence within. 🌿",
+      "support": "You can reach us anytime at support@ancientmindelixir.com.",
+      "refund": "I totally understand, {{name}}. But before you go, many users report the biggest breakthroughs after 3–4 consistent weeks. ✨ Would you consider continuing just a little longer? If you're still sure, you can email us at support@ancientmindelixir.com.",
+      "money back": "Consistency brings clarity, {{name}}. That said, if you still wish to proceed, please email us at support@ancientmindelixir.com.",
+      "reimbursement": "We want you to feel the benefits. Let’s give it one more week? If you’re sure, you can request your refund at support@ancientmindelixir.com.",
+      "get a refund": "We're here to support your journey, not rush it. That said, if you're absolutely certain, reach us at support@ancientmindelixir.com.",
+      "hi": "Hi {{name}}, how can I support you today?",
+      "hello": "Hello {{name}}! I'm here to help you with your journey."
+    };
+
+    function appendMessage(text, sender = 'bot') {
+      const msg = document.createElement('div');
+      msg.className = 'message ' + sender;
+      msg.innerText = text.replace('{{name}}', username || 'friend');
+      chatlog.appendChild(msg);
+      chatlog.scrollTop = chatlog.scrollHeight;
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage(text, 'user');
+
+      if (!username) {
+        username = text.split(' ')[0];
+        setTimeout(() => appendMessage(`Nice to meet you, ${username}! How can I guide you on your awakening journey today?`), 500);
+      } else {
+        const lower = text.toLowerCase();
+        const key = Object.keys(responses).find(k => lower.includes(k));
+        const reply = key ? responses[key] : `I'm not sure I understand, ${username}. Try rephrasing or email support@ancientmindelixir.com.`;
+        setTimeout(() => appendMessage(reply), 500);
+      }
+
+      input.value = '';
+    }
+
+    appendMessage(\"Welcome to AncientMind Elixir. What's your name?\");
+  </script>
+</body>
+</html>
