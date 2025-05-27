@@ -1,141 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>AncientMind Chatbot</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #0e1a12;
-      color: #f9fafb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    #chatbot {
-      background-color: #142b1e;
-      width: 100%;
-      max-width: 420px;
-      border-radius: 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-    h2 {
-      text-align: center;
-      margin-top: 0;
-      margin-bottom: 12px;
-      font-size: 20px;
-      color: #fcd34d;
-    }
-    #chatlog {
-      flex: 1;
-      height: 300px;
-      overflow-y: auto;
-      margin-bottom: 12px;
-      display: flex;
-      flex-direction: column;
-    }
-    .message {
-      margin: 6px 0;
-      padding: 10px 14px;
-      border-radius: 16px;
-      max-width: 80%;
-      line-height: 1.4;
-    }
-    .bot {
-      background-color: #1b3c2a;
-      align-self: flex-start;
-      color: #f9fafb;
-    }
-    .user {
-      background-color: #e0fce5;
-      align-self: flex-end;
-      color: #000;
-    }
-    #userInput {
-      padding: 10px;
-      border: 1px solid #444;
-      border-radius: 12px;
-      width: 75%;
-      background-color: #f3f4f6;
-      color: #000;
-    }
-    button {
-      padding: 10px;
-      background-color: #b79453;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      margin-left: 8px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div id="chatbot">
-    <h2>Ask your question here</h2>
-    <div id="chatlog"></div>
-    <div style="display: flex;">
-      <input id="userInput" type="text" placeholder="Type your message..." onkeypress="if(event.key==='Enter'){sendMessage()}" />
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
+// AncientMind Elixir Chatbot – Full FAQ Support (English)
 
-  <script>
-    const chatlog = document.getElementById('chatlog');
-    let username = '';
+const faq = {
+  "Q1": "AncientMind Elixir is a revolutionary supplement based on ancient formulas discovered in Egyptian manuscripts. It contains rare ingredients specifically formulated to decalcify and reactivate your pineal gland, what the ancients called the 'third eye.' This unique formula combines millennial wisdom with modern neuroscience to unlock your true mental and spiritual potential.",
+  "Q2": "It's very simple! Take just 1 capsule per day, at any time that's convenient for you. There's no need to take it with or without food, nor specific times. The important thing is daily consistency. In less than a week, you'll start noticing the first effects: deeper sleep, mental clarity, and increased energy.",
+  "Q3": "Many people report changes within the first 24–48 hours, especially in sleep quality and mental clarity. Within a week, the effects become more evident. For profound and lasting results, we recommend continuous use for at least 90 days, allowing complete decalcification of the pineal gland to occur.",
+  "Q4": "AncientMind Elixir is 100% natural, free from antibiotics, gluten, sugar, lactose, and the 8 major allergens. It's vegan and vegetarian. The only 'effects' you may experience are positive: more vivid dreams, heightened intuition, and increased synchronicities – signs that your pineal gland is awakening.",
+  "Q5": "The formula works in three stages: 1) Deep detoxification (removing fluoride and heavy metals), 2) Decalcification (breaking down calcium deposits), 3) Reactivation (amplifying the electromagnetic conductivity of the gland). Studies show these ingredients can reverse years of calcification caused by modern toxins.",
+  "Q6": "From birth, we're exposed to fluoride (water, toothpaste), heavy metals, and environmental toxins that accumulate in the pineal gland. This isn't accidental — as revealed in projects like MKUltra, there's an interest in keeping the population with deactivated pineals, since people with active third eyes cannot be easily controlled or manipulated.",
+  "Q7": "Our formula is unique because it's based on authentic Egyptian manuscripts discovered by Dr. Jonathan Mercer in 1922. It's not just a random combination of ingredients — it's a precise ancestral recipe, tested by civilizations that achieved impossible feats. Additionally, our ingredients are extremely rare and pharmaceutical-grade quality.",
+  "Q8": "Users report:\nPhysical: Deep sleep, more energy, improved blood pressure and cholesterol\nMental: Extreme clarity, laser focus, enhanced memory\nSpiritual: Vivid dreams, heightened intuition, sense of universal connection\nManifestation: Opportunities appear 'magically,' constant synchronicities\nRemember: the more calcified your pineal was, the more dramatic the transformation will be.",
+  "Q9": "Absolutely! Vivid and intense dreams are one of the first signs that your pineal gland is reactivating. Some people report prophetic dreams or clairvoyant experiences. This is completely normal and indicates you're reconnecting with higher dimensions of consciousness, exactly as ancient pharaohs and sages experienced.",
+  "Q10": "While we cannot guarantee specific financial results, many users report that mental clarity and heightened intuition lead them to make better business decisions, identify opportunities, and attract abundance in unexpected ways. David Miller's story, who received $12,323 unexpectedly, is just one example of how an active pineal can influence your reality.",
+  "Q11": "I understand your caution — it's exactly this skeptical mentality that the system wants you to have. But consider: why does the Vatican have a giant pinecone sculpture? Why did Jesus speak about the 'healthy eye' in Matthew 6:22? Why did ancient civilizations achieve feats we still can't explain? The evidence is everywhere for those who have eyes to see. We offer a 180-day guarantee because we know this works.",
+  "Q12": "This isn't about theories, but documented historical facts. Project MKUltra is proven by the CIA's own documents. Harvard University confirmed that fluoride reduces IQ. National Research Council studies prove the pineal absorbs more fluoride than any other tissue. This isn't conspiracy — it's suppressed science. Our formula simply reverses this damage.",
+  "Q13": "Exactly! And you know why? Because your pineal was calcified. It's like trying to tune a radio with a broken antenna. No manifestation technique, meditation, or therapy can work fully when the spiritual center of your brain is blocked. AncientMind is the 'unlocker' that allows all these practices to finally show their true potential.",
+  "Q14": "Before proceeding with cancellation, I'd like to understand what's concerning you. Perhaps I can clarify some doubts or offer additional guidance. Remember we have a 180-day guarantee — you have enough time to fully experience the transformation. Many of our clients had initial doubts but ended up becoming our biggest advocates after seeing results. For example, Anna S. from Seattle was initially skeptical, but the product literally saved her life by alerting her to an accident through a premonitory dream. If you still wish to cancel, I can help, but you'd miss the unique opportunity to access this ancestral formula. What specifically is causing your doubts?",
+  "Q15": "I'm sorry you haven't felt the expected effects yet. Before processing the refund, I'd like to ask some questions to ensure you're getting the best results: How long have you been taking the product? Are you taking it consistently every day? Have you been consuming fluoridated water or other fluoride products? What was your initial calcification level? Some people with more calcified pineals need more time. We have cases of people who only felt changes after 30–45 days. Considering our 180-day guarantee, you still have plenty of time. Can I offer personalized guidance to maximize your results before considering a refund?",
+  "Q16": "I understand the investment may seem significant initially. But consider this: how much have you already spent trying to find peace of mind, clarity, and purpose? Therapies, courses, spiritual retreats... AncientMind contains extremely rare ingredients that cost hundreds of dollars to acquire separately. Additionally, you're investing in the knowledge of entire civilizations that took millennia to develop this wisdom. Our current price is promotional because we want as many people as possible to awaken. Once stock runs out, there may not be another opportunity. Which financial aspect can I help clarify?",
+  "Q17": "Your order is processed within 24 hours and shipped with free and insured shipping worldwide. Delivery time varies:\nUSA: 5–7 business days\nCanada: 7–10 business days\nEurope: 10–15 business days\nRest of world: 15–20 business days\nYou'll receive a tracking code via email. The package arrives in discreet packaging for your privacy.",
+  "Q18": "AncientMind is 100% natural, but we always recommend consulting your doctor before combining with medications, especially if you take drugs for blood pressure, diabetes, or heart conditions. Many users reported improvements in these conditions and were able to reduce medications under medical supervision.",
+  "Q19": "Yes! We offer the most powerful guarantee in the market: 180 days (6 months) full refund, no questions asked. This demonstrates our total confidence in the product. If for any reason you don't feel a complete transformation, we return 100% of your money.",
+  "Q20": "Clear signs of activation include: More vivid and meaningful dreams, heightened intuition in decisions, increased synchronicities (meaningful coincidences), greater energetic sensitivity with people, unprecedented mental clarity, sensation of 'knowing' things without logical explanation, improved sleep and energy.",
+  "Q21": "Yes! AncientMind is safe for the whole family. Many parents report dramatic improvements when the entire family uses it, creating a more harmonious and connected environment. Children and teenagers can especially benefit since their pineals aren't fully calcified yet.",
+  "Q22": "Benefits accumulate over time. Once your pineal is decalcified and reactivated, it will maintain greater functionality even if you stop. However, we live in a toxic environment, so continuous use ensures protection and optimized benefits."
+};
 
-    const responses = {
-      "how many capsules": "You only need 1 capsule a day. Taking more doesn't accelerate results — consistency is what matters!",
-      "how should i take": "Take one capsule daily, preferably in the morning, with or without food. Pair it with a short intention or affirmation.",
-      "forgot": "No worries! Just take your next capsule as usual tomorrow. Consistency over time is key.",
-      "missed": "It's totally fine to miss a day. Simply continue the next day. Don't take double doses.",
-      "how does it work": "AncientMind Elixir gently stimulates and decalcifies your pineal gland, awakening your intuition, clarity, and peace.",
-      "effects": "In the first few days: deeper sleep, mental clarity, calm. Over time: improved intuition, emotional balance, spiritual alignment.",
-      "side effects": "There are no known side effects. It's a natural blend, but always consult your doctor if unsure.",
-      "what is this": "It's more than a supplement. It's a ritual to reconnect you with your inner guidance and divine intelligence.",
-      "support": "We're here to help! Email us anytime at support@ancientmindelixir.com.",
-      "refund": "We understand, but before you give up — many users feel the true benefits after 3–4 weeks of use. Often the transformation is subtle but deep. Would you consider continuing a little longer? If not, you can email support@ancientmindelixir.com.",
-      "money back": "We’d love for you to experience the full journey. The real shift often starts in week 3 or 4. Still want a refund? Email support@ancientmindelixir.com.",
-      "get a refund": "Totally understandable. But some of our most loyal users almost gave up before week 3. Would you be open to continuing just a bit more? If you prefer a refund, email support@ancientmindelixir.com.",
-      "hi": "Hi there! What would you like to know about the Elixir?",
-      "hello": "Hello! I'm here to help you with anything related to AncientMind Elixir."
-    };
+function respondToUser(questionId) {
+  const response = faq[questionId];
+  const closing = "I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.";
+  return response ? `${response}\n\n${closing}` : "Could you clarify your question? I'm here to help you awaken your full potential.";
+}
 
-    function appendMessage(text, sender = 'bot') {
-      const msg = document.createElement('div');
-      msg.className = 'message ' + sender;
-      msg.innerText = text.replace('{{name}}', username || 'friend');
-      chatlog.appendChild(msg);
-      chatlog.scrollTop = chatlog.scrollHeight;
-    }
-
-    function sendMessage() {
-      const input = document.getElementById('userInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      appendMessage(text, 'user');
-
-      if (!username) {
-        username = text.split(' ')[0];
-        setTimeout(() => appendMessage(`Nice to meet you, ${username}! How can I help you on your AncientMind journey today?`), 500);
-      } else {
-        const lower = text.toLowerCase();
-        const key = Object.keys(responses).find(k => lower.includes(k));
-        const reply = key ? responses[key] : `I'm not sure I understand, ${username}. Can you rephrase your question? Or email support@ancientmindelixir.com.`;
-        setTimeout(() => appendMessage(reply), 500);
-      }
-
-      input.value = '';
-    }
-
-    appendMessage("Welcome to AncientMind. What's your name?");
-  </script>
-</body>
-</html>
+// Example usage
+console.log(respondToUser("Q6"));
