@@ -1,63 +1,105 @@
-<div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:12px;padding:1rem;box-shadow:0 0 10px rgba(0,0,0,0.2);font-family:Arial,sans-serif;">
-  <div id="chatlog" style="max-height:300px;overflow-y:auto;margin-bottom:1rem;color:#2e5939;">
-    <div><strong>Bot:</strong> Hello and welcome to your awakening journey 🌿<br>Before we begin, may I know your name?</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AncientMind Chatbot</title>
+  <style>
+    body {
+      background-color: #2e5939;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      color: white;
+    }
+    .chatbox {
+      background: white;
+      color: #2e5939;
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .chatlog {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    .message {
+      margin: 0.5rem 0;
+    }
+    input[type="text"] {
+      width: 75%;
+      padding: 0.5rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #2e5939;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <div id="chatlog" class="chatlog">
+      <div><strong>Bot:</strong> Hello and welcome to your awakening journey 🌿<br>Before we begin, may I know your name?</div>
+    </div>
+    <input type="text" id="questionInput" placeholder="Type your message here...">
+    <button onclick="handleMessage()">Send</button>
   </div>
-  <input type="text" id="questionInput" placeholder="Type your message here..." style="width:75%;padding:0.5rem;" />
-  <button onclick="handleMessage()" style="padding:0.5rem 1rem;background:#2e5939;color:white;border:none;border-radius:4px;font-weight:bold;">Send</button>
-</div>
-
-<script>
-let userName = "";
-let initialized = false;
-
-const responses = {
-  "what is ancientmind": "AncientMind Elixir is a revolutionary supplement inspired by ancient Egyptian wisdom, designed to reactivate your pineal gland and unlock your highest mental and spiritual potential.",
-  "how do i take": "It's simple: take 1 capsule daily at any time. No food or fasting required — just be consistent.",
-  "how long to see results": "Many feel a difference within 24–48 hours, but the most profound results come with daily use over 90 days.",
-  "side effects": "AncientMind is 100% natural and safe. Positive effects like vivid dreams, intuition, and energy are common signs of awakening.",
-  "pineal gland": "Our formula detoxifies fluoride and heavy metals, decalcifies the pineal, and reactivates its energy — scientifically and spiritually proven.",
-  "why is pineal calcified": "Fluoride, toxins, and EMF exposure calcify the pineal. It's no accident — it's been documented in history and science.",
-  "difference from other supplements": "AncientMind is based on Egyptian manuscripts and uses rare, pharmaceutical-grade ingredients. No other formula compares.",
-  "experiences": "Expect better sleep, more energy, deep clarity, strong intuition, and meaningful synchronicities.",
-  "weird dreams": "Yes — vivid or even prophetic dreams are a good sign. Your pineal gland is waking up!",
-  "financial help": "Users report better intuition and decision-making that led to surprising abundance. It’s not magic — it’s clarity.",
-  "cancel": "Before canceling, can you share your concern? Many users changed their minds after seeing real transformation.",
-  "refund": "Let’s check: how long have you used it? Daily? Any fluoride exposure? Some feel the shift after 30+ days.",
-  "expensive": "It’s an investment in awakening. These ingredients are rare and potent — and the transformation is priceless.",
-  "shipping": "Orders ship within 24h. Delivery: US 5–7 days, CA 7–10, EU 10–15, global up to 20. You’ll get a tracking email.",
-  "medications": "It’s natural and safe. Still, consult your doctor if you take medications — many users reduced theirs!",
-  "guarantee": "Yes! You’re covered by a 180-day full refund — no questions asked. We believe in your transformation.",
-  "signs of activation": "You’ll feel more dreams, intuition, synchronicities, mental clarity, and a calm sense of ‘knowing’.",
-  "family": "Yes! It’s safe for all ages — children especially benefit before full pineal calcification.",
-  "stop taking": "If you stop, many benefits stay. But in our modern toxic world, regular use helps maintain your clarity."
-};
-
-function handleMessage() {
-  const input = document.getElementById("questionInput");
-  const chatlog = document.getElementById("chatlog");
-  const message = input.value.trim();
-  if (!message) return;
-
-  chatlog.innerHTML += `<div style='margin:0.5rem 0;'><strong>You:</strong> ${message}</div>`;
-  input.value = "";
-
-  if (!initialized) {
-    userName = message.split(" ")[0];
-    chatlog.innerHTML += `<div style='margin:0.5rem 0;'><strong>Bot:</strong> Hi ${userName}, lovely to meet you 🌱<br>Ask me anything about your AncientMind journey. I'm here to guide you with wisdom and care.</div>`;
-    initialized = true;
-  } else {
-    const response = getResponse(message);
-    chatlog.innerHTML += `<div style='margin:0.5rem 0;'><strong>Bot:</strong> ${response}</div>`;
-  }
-
-  chatlog.scrollTop = chatlog.scrollHeight;
-}
-
-function getResponse(msg) {
-  msg = msg.toLowerCase();
-  for (let keyword in responses) {
-    if (msg.includes(keyword)) return responses[keyword] + "<br><br><strong>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.</strong>";
-  }
-  return "That’s a beautiful question. Can you rephrase it? I want to support you with the clarity you deserve.";
-}
-</script>
+  <script>
+    let userName = "";
+    let initialized = false;
+    const responses = {
+      "what is ancientmind": "AncientMind Elixir is a revolutionary supplement inspired by ancient Egyptian wisdom, designed to reactivate your pineal gland and unlock your highest mental and spiritual potential.",
+      "how do i take": "It's simple: take 1 capsule daily at any time. No food or fasting required — just be consistent.",
+      "how long to see results": "Many feel a difference within 24–48 hours, but the most profound results come with daily use over 90 days.",
+      "side effects": "AncientMind is 100% natural and safe. Positive effects like vivid dreams, intuition, and energy are common signs of awakening.",
+      "pineal gland": "Our formula detoxifies fluoride and heavy metals, decalcifies the pineal, and reactivates its energy — scientifically and spiritually proven.",
+      "why is pineal calcified": "Fluoride, toxins, and EMF exposure calcify the pineal. It's no accident — it's been documented in history and science.",
+      "difference from other supplements": "AncientMind is based on Egyptian manuscripts and uses rare, pharmaceutical-grade ingredients. No other formula compares.",
+      "experiences": "Expect better sleep, more energy, deep clarity, strong intuition, and meaningful synchronicities.",
+      "weird dreams": "Yes — vivid or even prophetic dreams are a good sign. Your pineal gland is waking up!",
+      "financial help": "Users report better intuition and decision-making that led to surprising abundance. It’s not magic — it’s clarity.",
+      "cancel": "Before canceling, can you share your concern? Many users changed their minds after seeing real transformation.",
+      "refund": "Let’s check: how long have you used it? Daily? Any fluoride exposure? Some feel the shift after 30+ days.",
+      "expensive": "It’s an investment in awakening. These ingredients are rare and potent — and the transformation is priceless.",
+      "shipping": "Orders ship within 24h. Delivery: US 5–7 days, CA 7–10, EU 10–15, global up to 20. You’ll get a tracking email.",
+      "medications": "It’s natural and safe. Still, consult your doctor if you take medications — many users reduced theirs!",
+      "guarantee": "Yes! You’re covered by a 180-day full refund — no questions asked. We believe in your transformation.",
+      "signs of activation": "You’ll feel more dreams, intuition, synchronicities, mental clarity, and a calm sense of ‘knowing’.",
+      "family": "Yes! It’s safe for all ages — children especially benefit before full pineal calcification.",
+      "stop taking": "If you stop, many benefits stay. But in our modern toxic world, regular use helps maintain your clarity."
+    };
+    function handleMessage() {
+      const input = document.getElementById("questionInput");
+      const chatlog = document.getElementById("chatlog");
+      const message = input.value.trim();
+      if (!message) return;
+      chatlog.innerHTML += `<div class='message'><strong>You:</strong> ${message}</div>`;
+      input.value = "";
+      if (!initialized) {
+        userName = message.split(" ")[0];
+        chatlog.innerHTML += `<div class='message'><strong>Bot:</strong> Hi ${userName}, lovely to meet you 🌱<br>Ask me anything about your AncientMind journey. I'm here to guide you with wisdom and care.</div>`;
+        initialized = true;
+      } else {
+        const response = getResponse(message);
+        chatlog.innerHTML += `<div class='message'><strong>Bot:</strong> ${response}</div>`;
+      }
+      chatlog.scrollTop = chatlog.scrollHeight;
+    }
+    function getResponse(msg) {
+      msg = msg.toLowerCase();
+      for (let keyword in responses) {
+        if (msg.includes(keyword)) return responses[keyword] + "<br><br><strong>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.</strong>";
+      }
+      return "That’s a beautiful question. Can you rephrase it? I want to support you with the clarity you deserve.";
+    }
+  </script>
+</body>
+</html>
