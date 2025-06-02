@@ -1,76 +1,649 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title style="color:white;">Chat</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #e9ecef;
-      margin: 0;
-      padding: 0;
-    }
-    #chat {
-      height: 80vh;
-      overflow-y: scroll;
-      padding: 20px;
-      background-color: #f8f9fa;
-    }
-    #userInput {
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      border: none;
-      border-top: 1px solid #ccc;
-    }
-    h1 {
-      color: white;
-      background-color: #0f5132;
-      padding: 20px;
-      margin: 0;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <h1>Chat</h1>
-  <div id="chat"></div>
-  <input type="text" id="userInput" placeholder="Type your question here...">
-  <script>
-    const chat = document.getElementById("chat");
-    const input = document.getElementById("userInput");
+<script>
+ const chat = document.getElementById("chat");
+ const input = document.getElementById("userInput");
 
-    const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-    const responses = [
-      // todas as respostas anteriores seguem aqui (mantidas sem abreviação)...
-    ];
+ const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-    function getSuzieResponse(message) {
-      const clean = normalize(message);
-      for (const item of responses) {
-        if (item.keywords.some(k => clean.includes(k))) {
-          return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived";
-        }
-      }
-      return "🌟 That's a beautiful question. Could you tell me a bit more so I can guide you better?";
-    }
 
-    function sendMessage() {
-      const userText = input.value.trim();
-      if (!userText) return;
-      chat.innerHTML += `<div style="text-align: right;"><div style="background: #0f5132; color: white; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block;">${userText}</div></div>`;
-      const response = getSuzieResponse(userText);
-      chat.innerHTML += `<div style="background: white; color: black; padding: 10px; border-radius: 15px; margin-bottom: 10px; max-width: 80%;">${response}</div>`;
-      chat.scrollTop = chat.scrollHeight;
-      input.value = "";
-    }
+ const responses = [
+   {
+     keywords: [
+ "what is ancientmind",
+ "what is this product",
+ "what's this elixir",
+ "what is it for",
+ "about ancientmind elixir",
+ "what does it do",
+ "what's the purpose",
+ "what’s the benefit",
+ "how does ancientmind work",
+ "third eye activation",
+ "pineal gland reactivation",
+ "spiritual awakening",
+ "unlock mental potential",
+ "why take ancientmind",
+ "purpose of the supplement",
+ "decalcify pineal",
+ "reactivate pineal gland",
+ "egyptian formula",
+ "ancient formula supplement",
+ "mental clarity product",
+ "supplement for spirituality",
+ "elixir for awakening",
+ "pineal supplement",
+ "what’s in the elixir",
+ "egyptian wisdom"
+],
+     answer: "🌿 AncientMind Elixir is a revolutionary supplement based on ancient formulas discovered in Egyptian manuscripts. It contains rare ingredients specifically formulated to decalcify and reactivate your pineal gland, what the ancients called the third eye This unique formula combines millennial wisdom with modern neuroscience to unlock your true mental and spiritual potential."
+   },
+   {
+     keywords: [
+ "how to take",
+ "how do i take",
+ "what's the dosage",
+ "daily dosage",
+ "how many capsules",
+ "how often",
+ "instructions",
+ "usage instructions",
+ "when to take",
+ "what time to take",
+ "should i take with food",
+ "take on empty stomach",
+ "do i need to take at night",
+ "can i take in the morning",
+ "how much per day",
+ "what’s the best time",
+ "can i take anytime",
+ "1 capsule a day",
+ "take every day",
+ "take with or without food",
+ "daily use",
+ "how to use",
+ "how should i take it",
+ "can i skip days",
+ "should i be consistent",
+ "take with meal",
+ "take before bed"
+],
+     answer: "✨ It's very simple! Take just 1 capsule per day, at any time that's convenient for you. There's no need to take it with or without food, nor specific times. The important thing is daily consistency. In less than a week, you'll start noticing the first effects: deeper sleep, mental clarity, and increased energy."
+   },
+   {
+     keywords: [
+ "how long", "when does it start", "how fast", "how soon", "when will i see results", "time to see effects", "results time", "how long for changes", "effects after how many days", "see results", "start working",
+ "changes in first week",
+ "how long to work",
+ "how long to notice",
+ "do results appear fast",
+ "when will it work",
+ "24-48 hours",
+ "first week",
+ "mental clarity improvement",
+ "better sleep how long",
+ "how long until benefits",
+ "how many days for changes",
+ "90 days full effect",
+ "pineal gland decalcification time",
+ "duration for transformation",
+ "how long to decalcify"
+],
+     answer: "Many people report changes within the first 24-48 hours, especially in sleep quality and mental clarity. Within a week, the effects become more evident. For profound and lasting results, we recommend continuous use for at least 90 days, allowing complete decalcification of the pineal gland to occur."
+   },
+   {
+     keywords: [
+ "side effects",
+ "is it safe",
+ "any risks",
+ "is this safe to take",
+ "can it cause problems",
+ "is it natural",
+ "does it have chemicals",
+ "will it affect my health",
+ "can i feel bad",
+ "any allergic reactions",
+ "is it gluten free",
+ "is it vegan",
+ "is it healthy",
+ "any negative effects",
+ "what are the effects",
+ "are there bad side effects",
+ "can i trust this",
+ "safe for everyone",
+ "safe supplement",
+ "safe to use daily",
+ "no sugar",
+ "no lactose",
+ "non-allergenic",
+ "clean formula"
+],
+     answer: "AncientMind Elixir is 100% natural, free from antibiotics, gluten, sugar, lactose, and the 8 major allergens. It's vegan and vegetarian. The only effects you may experience are positive: more vivid dreams, heightened intuition, and increased synchronicities - signs that your pineal gland is awakening."
+   },
+   {
+       keywords: [
+ "how does it decalcify",
+ "how it works",
+ "how does it work",
+ "pineal gland decalcify",
+ "how does this clean pineal",
+ "what does it do to pineal",
+ "decalcification process",
+ "clean pineal gland",
+ "detox pineal",
+ "remove fluoride",
+ "removing toxins",
+ "pineal activation steps",
+ "pineal reactivation",
+ "pineal detox",
+ "decalcify third eye",
+ "detox heavy metals",
+ "how it removes toxins",
+ "clean brain",
+ "electromagnetic conductivity",
+ "how it heals pineal",
+ "what happens in the body",
+ "reverse calcification",
+ "break calcium deposits"
+],
+     answer: "The formula works in three stages: Deep detoxification, removing fluoride and heavy metals. Decalcification, which break down calcium deposits. Reactivation, amplifying the electromagnetic conductivity of the gland. Studies show these ingredients can reverse years of calcification caused by modern toxins."
+   },
+   {
+       keywords: [
+ "why pineal calcifies",
+ "why is pineal blocked",
+ "what causes calcification",
+ "what calcifies pineal",
+ "how pineal becomes calcified",
+ "pineal damage",
+ "pineal dysfunction",
+ "fluoride pineal gland",
+ "toxins in pineal",
+ "fluoride in water",
+ "toothpaste fluoride",
+ "heavy metals in brain",
+ "environmental toxins",
+ "mkultra pineal",
+ "why is third eye closed",
+ "third eye blocked",
+ "pineal manipulation",
+ "why does pineal stop working",
+ "how pineal shuts down",
+ "pineal control",
+ "why society blocks pineal",
+ "intentional calcification",
+ "pineal gland suppression"
+],
+     answer: "💬 From birth, we're exposed to fluoride (water, toothpaste), heavy metals, and environmental toxins that accumulate in the pineal gland. This isn't accidental, as revealed in projects like MKUltra, there's an interest in keeping the population with deactivated pineals, since people with active third eyes cannot be easily controlled or manipulated"
+   },
+   {
+       keywords: [
+ "difference between ancientmind and others",
+ "how is this different",
+ "why is ancientmind unique",
+ "is it better than other supplements",
+ "what makes this special",
+ "why choose ancientmind",
+ "what's different about this",
+ "unique formula",
+ "egyptian manuscript",
+ "real ancient recipe",
+ "jonathan mercer",
+ "authentic pineal supplement",
+ "original formula",
+ "comparison with other supplements",
+ "how is this better",
+ "rare ingredients",
+ "pharmaceutical grade",
+ "tested by ancient civilizations",
+ "ancestral recipe",
+ "not like other products",
+ "real third eye formula",
+ "ancientmind vs others",
+ "pineal gland supplement comparison",
+ "why this product stands out"
+],
+     answer: "Our formula is unique because it's based on authentic Egyptian manuscripts discovered by Dr. Jonathan Mercer in 1922. It's not just a random combination of ingredients - it's a precise ancestral recipe, tested by civilizations that achieved impossible feats. Additionally, our ingredients are extremely rare and pharmaceutical-grade quality."
+   },
+   {
+       keywords: [
+ "what will i feel",
+ "what can i expect",
+ "experiences with ancientmind",
+ "what happens after taking",
+ "user results",
+ "what results",
+ "does it really work",
+ "what changes will i notice",
+ "how will i feel",
+ "benefits of ancientmind",
+ "does it help sleep",
+ "improve energy",
+ "mental clarity",
+ "enhanced focus",
+ "improve memory",
+ "will i have vivid dreams",
+ "will my intuition grow",
+ "spiritual awakening",
+ "synchronicities",
+ "manifestation help",
+ "does it help with health",
+ "deep transformation",
+ "physical and mental changes",
+ "spiritual effects",
+ "pineal transformation"
+],
+     answer: "Users report: Physical: Deep sleep, more energy, improved blood pressure and cholesterol. Mental: Extreme clarity, laser focus, enhanced memory. Spiritual: Vivid dreams, heightened intuition, sense of universal connection. Manifestation: Opportunities appear magically, constant synchronicities. Remember: the more calcified your pineal was, the more dramatic the transformation will be."
+   },
+   {
+       keywords: [
+ "is it normal to feel weird",
+ "is it normal to feel different",
+ "weird sensations",
+ "strange effects",
+ "unusual experiences",
+ "strange dreams",
+ "weird dreams",
+ "vivid dreams",
+ "dreams after taking",
+ "prophetic dreams",
+ "clairvoyant dreams",
+ "intense dreams",
+ "visions during sleep",
+ "lucid dreams",
+ "night experiences",
+ "weird feelings",
+ "energy shifts",
+ "feeling strange",
+ "dreams about symbols",
+ "is it normal to have visions",
+ "ancient dreams",
+ "higher consciousness dreams",
+ "pharaoh dreams",
+ "messages in dreams",
+ "dreams awakening"
+],
+     answer: "Absolutely! Vivid and intense dreams are one of the first signs that your pineal gland is reactivating. Some people report prophetic dreams or clairvoyant experiences. This is completely normal and indicates you're reconnecting with higher dimensions of consciousness, exactly as ancient pharaohs and sages experienced."
+   },
+   {
+       keywords: [
+ "can it help with money",
+ "does it help financially",
+ "attract abundance",
+ "will i get rich",
+ "can i manifest money",
+ "make better financial decisions",
+ "financial transformation",
+ "does it help in business",
+ "intuition for money",
+ "manifestation of money",
+ "money and pineal gland",
+ "will i make more money",
+ "financial clarity",
+ "abundance activation",
+ "opportunity attraction",
+ "unexpected income",
+ "attracting wealth",
+ "help with career",
+ "money success",
+ "pineal and prosperity",
+ "manifest cash",
+ "money vibration",
+ "spiritual abundance",
+ "prosperity energy"
+],
+     answer: "While we cannot guarantee specific financial results, many users report that mental clarity and heightened intuition lead them to make better business decisions, identify opportunities, and attract abundance in unexpected ways. David Miller's story, who received $12,323 unexpectedly, is just one example of how an active pineal can influence your reality."
+   },
+   {
+       keywords: [
+ "this sounds too good",
+ "too good to be true",
+ "i don't believe this",
+ "is this real",
+ "seems fake",
+ "sounds like a scam",
+ "is it true",
+ "hard to believe",
+ "not convinced",
+ "is this legit",
+ "this is unbelievable",
+ "feels exaggerated",
+ "seems like marketing",
+ "i'm skeptical",
+ "sounds made up",
+ "sounds magical",
+ "is it a lie",
+ "is this really ancient",
+ "too spiritual to be real",
+ "is there proof",
+ "is it scientifically backed",
+ "evidence for this",
+ "is there real data",
+ "how do i trust this"
+],
+     answer: "I understand your caution, it's exactly this skeptical mentality that the system wants you to have. But consider: why does the Vatican have a giant pinecone sculpture? Why did Jesus speak about the 'healthy eye' in Matthew 6:22? Why did ancient civilizations achieve feats we still can't explain? The evidence is everywhere for those who have eyes to see. We offer a 180 days guarantee because we know this works."
+   },
+   {
+       keywords: [
+ "i don't believe in conspiracy",
+ "conspiracy theory",
+ "is this a conspiracy",
+ "sounds like a theory",
+ "mkultra",
+ "fluoride is harmless",
+ "fluoride doesn't affect me",
+ "government control",
+ "are you serious about fluoride",
+ "this sounds fake",
+ "this can't be real",
+ "pineal and fluoride",
+ "science behind this",
+ "is there proof of mkultra",
+ "harvard fluoride study",
+ "pineal absorbs fluoride",
+ "documented evidence",
+ "science or conspiracy",
+ "is this just fear",
+ "sounds paranoid",
+ "is this true or theory",
+ "proof this works",
+ "backed by science"
+],
+     answer: "This isn't about theories, but documented historical facts. Project MKUltra is proven by the CIA's own documents. Harvard University confirmed that fluoride reduces IQ. National Research Council studies prove the pineal absorbs more fluoride than any other tissue. This isn't conspiracy - it's suppressed science. Our formula simply reverses this damage."
+   },
+   {
+       keywords: [
+ "i've tried everything",
+ "nothing worked for me",
+ "ayahuasca didn't help",
+ "therapy didn't work",
+ "meditation failed",
+ "tried manifestation",
+ "tried spiritual retreats",
+ "still stuck",
+ "no technique worked",
+ "used law of attraction",
+ "visualization failed",
+ "can't connect spiritually",
+ "i do yoga but feel blocked",
+ "i pray but nothing changes",
+ "why nothing works for me",
+ "tried spiritual practices",
+ "i'm not awakening",
+ "spiritual block",
+ "why can't i manifest",
+ "feel disconnected",
+ "tried reiki but no results",
+ "inner work failed",
+ "no result from meditation"
+],
+     answer: "Exactly! And you know why? Because your pineal was calcified. It's like trying to tune a radio with a broken antenna. No manifestation technique, meditation, or therapy can work fully when the spiritual center of your brain is blocked. AncientMind is the 'unlocker' that allows all these practices to finally show their true potential."
+   },
+   {
+       keywords: [
+ "i want to cancel",
+ "cancel my order",
+ "how do i cancel",
+ "request refund",
+ "i changed my mind",
+ "stop my purchase",
+ "don't want anymore",
+ "cancel subscription",
+ "give up",
+ "not going to use",
+ "refund my money",
+ "cancel before receiving",
+ "regret buying",
+ "cancel now",
+ "please cancel",
+ "not interested anymore",
+ "return the product",
+ "don't feel ready",
+ "cancel before trying",
+ "need to cancel"
+],
+     answer: "Before proceeding with cancellation, I'd like to understand what's concerning you. Perhaps I can clarify some doubts or offer additional guidance. Remember we have a 180-day guarantee - you have enough time to fully experience the transformation. Many of our clients had initial doubts but ended up becoming our biggest advocates after seeing results. For example, Anna S from Seattle was initially skeptical, but the product literally saved her life by alerting her to an accident through a premonitory dream. If you still wish to cancel, I can help, but you'd miss the unique opportunity to access this ancestral formula. What specifically is causing your doubts?"
+   },
+   {
+     keywords: [
+ "i want a refund",
+ "didn't work for me",
+ "i saw no results",
+ "this product doesn't work",
+ "want my money back",
+ "asking for a refund",
+ "refund request",
+ "no effect from product",
+ "how do i get a refund",
+ "return request",
+ "disappointed with results",
+ "nothing changed",
+ "not seeing improvements",
+ "need refund",
+ "cancel and refund",
+ "still waiting for results",
+ "it failed for me",
+ "i'm not satisfied",
+ "not what i expected",
+ "zero results",
+ "request to return",
+ "refund now please"
+],
+     answer: "I'm sorry you haven't felt the expected effects yet. Before processing the refund, I'd like to ask some questions to ensure you're getting the best results: How long have you been taking the product? Are you taking it consistently every day? Have you been consuming fluoridated water or other fluoride products? What was your initial calcification level? Some people with more calcified pineals need more time. We have cases of people who only felt changes after 30-45 days. Considering our 180-day guarantee, you still have plenty of time. Can I offer personalized guidance to maximize your results before considering a refund?"
+   },
+   {
+       keywords: [
+ "too expensive",
+ "price is high",
+ "can't afford",
+ "costs too much",
+ "not cheap",
+ "is it worth the price",
+ "why is it expensive",
+ "i don't have the money",
+ "is it overpriced",
+ "high cost",
+ "cost vs benefit",
+ "can i get discount",
+ "do you have promo",
+ "is it really worth it",
+ "investment too high",
+ "how much does it cost",
+ "not in my budget",
+ "why is it so costly",
+ "paying too much",
+ "i spent too much already"
+],
+     answer: "I understand the investment may seem significant initially. But consider this: how much have you already spent trying to find peace of mind, clarity, and purpose? Therapies, courses, spiritual retreats... AncientMind contains extremely rare ingredients that cost hundreds of dollars to acquire separately. Additionally, you're investing in the knowledge of entire civilizations that took millennia to develop this wisdom. Our current price is promotional because we want as many people as possible to awaken. Once stock runs out, there may not be another opportunity. Which financial aspect can I help clarify?"
+   },
+   {
+       keywords: [
+ "when will i receive",
+ "delivery time",
+ "how long to arrive",
+ "when does it ship",
+ "shipping status",
+ "order status",
+ "where is my order",
+ "track my order",
+ "order tracking",
+ "delivery estimate",
+ "how many days to deliver",
+ "shipping info",
+ "arrival time",
+ "shipping confirmation",
+ "package time",
+ "order hasn't arrived",
+ "still waiting for order",
+ "how long does it take",
+ "shipping worldwide",
+ "free shipping",
+ "delivery to usa",
+ "delivery to canada",
+ "delivery to europe",
+ "tracking number",
+ "discreet packaging"
+],
+     answer: "Your order is processed within 24 hours and shipped with free and insured shipping worldwide. Delivery time varies: USA: 5-7 business days. Canada: 7-10 business days. Europe: 10-15 business days. Rest of world: 15-20 business days. You'll receive a tracking code via email. The package arrives in discreet packaging for your privacy."
+   },
+   {
+       keywords: [
+ "can i take with medication",
+ "use with other medicines",
+ "is it safe with my meds",
+ "combine with prescriptions",
+ "take with blood pressure medicine",
+ "mix with diabetes meds",
+ "heart medication interaction",
+ "take it with pills",
+ "safe with medical treatment",
+ "use with drugs",
+ "natural supplement with medicine",
+ "take with other supplements",
+ "safe with prescriptions",
+ "compatibility with medications",
+ "does it interfere with medicine",
+ "medical interaction",
+ "taking medication",
+ "doctor approval",
+ "safe if i’m medicated",
+ "i’m under treatment",
+ "taking pills",
+ "health condition safe",
+ "can it conflict with drugs"
+],
+     answer: "AncientMind is 100% natural, but we always recommend consulting your doctor before combining with medications, especially if you take drugs for blood pressure, diabetes, or heart conditions. Many users reported improvements in these conditions and were able to reduce medications under medical supervision."
+   },
+   {
+       keywords: [
+ "is there a guarantee",
+ "do you offer refund",
+ "how long is the guarantee",
+ "money-back guarantee",
+ "return policy",
+ "can i get my money back",
+ "refund period",
+ "180 days",
+ "six months guarantee",
+ "warranty",
+ "is it refundable",
+ "no questions asked refund",
+ "can i test it risk free",
+ "what if it doesn't work",
+ "satisfaction guarantee",
+ "will i get a refund if i don’t like it",
+ "secure purchase",
+ "risk free purchase",
+ "refund without reason"
+],
+     answer: "Yes! We offer the most powerful guarantee in the market: 180 days (6 months) full refund, no questions asked. This demonstrates our total confidence in the product. If for any reason you don't feel a complete transformation, we return 100% of your money."
+   },
+   {
+       keywords: [
+ "how do i know it's working",
+ "pineal activation signs",
+ "is my third eye opening",
+ "how to know if pineal is activating",
+ "symptoms of pineal activation",
+ "signs my pineal is active",
+ "what happens when pineal opens",
+ "how will i feel",
+ "how do i know it’s real",
+ "how to confirm activation",
+ "vivid dreams sign",
+ "increased synchronicities",
+ "feel more intuitive",
+ "am i awakening",
+ "feeling different since starting",
+ "clearer thoughts",
+ "i feel energy shifts",
+ "recognize signs of activation",
+ "pineal gland awakening signs",
+ "energy sensitivity",
+ "mental clarity proof",
+ "confirmation of activation"
+],
+     answer: "More vivid and meaningful dreams. Heightened intuition in decisions. Increased synchronicities (meaningful coincidences). Greater energetic sensitivity with people. Unprecedented mental clarity. Sensation of 'knowing' things without logical explanation. Improved sleep and energy"
+   },
+   {
+       keywords: [
+ "can i give to my family",
+ "is it safe for kids",
+ "can children use it",
+ "teenagers use ancientmind",
+ "safe for my son",
+ "can my daughter take it",
+ "give to partner",
+ "safe for all ages",
+ "use with family",
+ "everyone can take it",
+ "family use",
+ "safe for my husband",
+ "safe for my wife",
+ "can elders use it",
+ "my parents take it",
+ "can my child take ancientmind",
+ "for household use",
+ "can we all use it",
+ "shared use",
+ "group usage"
+],
+     answer: "Yes! AncientMind is safe for the whole family. Many parents report dramatic improvements when the entire family uses it, creating a more harmonious and connected environment. Children and teenagers can especially benefit since their pineals aren't fully calcified yet."
+   },
+   {
+       keywords: [
+ "what happens if i stop",
+ "can i stop taking it",
+ "do i need to take forever",
+ "effects after stopping",
+ "will benefits go away",
+ "if i stop will i lose progress",
+ "is it okay to stop",
+ "when should i stop",
+ "is it permanent",
+ "how long do benefits last",
+ "does it fade",
+ "will i regress",
+ "should i keep taking it",
+ "do i have to take it for life",
+ "temporary or permanent",
+ "need to continue forever",
+ "do results stay after stopping",
+ "if i quit what happens",
+ "do i lose awakening",
+ "continuous use required"
+],
+     answer: "Benefits accumulate over time. Once your pineal is decalcified and reactivated, it will maintain greater functionality even if you stop. However, we live in a toxic environment, so continuous use ensures protection and optimized benefits."
+   },
+   {
+     keywords: ["intuition", "spiritual", "energy", "manifest", "higher"],
+     answer: "🔮 These are signs your connection is growing stronger. Trust the signs — you're aligning with your higher self."
+   }
+ ];
 
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") sendMessage();
-    });
-  </script>
-</body>
-</html>
 
+ function getSuzieResponse(message) {
+   const clean = normalize(message);
+   for (const item of responses) {
+     if (item.keywords.some(k => clean.includes(k))) {
+       return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived";
+     }
+   }
+   return "🌟 That's a beautiful question. Could you tell me a bit more so I can guide you better?";
+ }
+
+
+ function sendMessage() {
+   const userText = input.value.trim();
+   if (!userText) return;
+   chat.innerHTML += `<div style="text-align: right;"><div style="background: #0f5132; color: white; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block;">${userText}</div></div>`;
+   const response = getSuzieResponse(userText);
+   chat.innerHTML += `<div style="background: white; color: black; padding: 10px; border-radius: 15px; margin-bottom: 10px; max-width: 80%;">${response}</div>`;
+   chat.scrollTop = chat.scrollHeight;
+   input.value = "";
+ }
+
+
+ input.addEventListener("keydown", function (e) {
+   if (e.key === "Enter") sendMessage();
+ });
+</script>
