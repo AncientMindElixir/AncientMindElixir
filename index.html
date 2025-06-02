@@ -1,78 +1,114 @@
-<div style="max-width:600px;margin:0 auto;border:3px solid #2e5939;border-radius:16px;background:#ffffff;padding:1rem;box-shadow:0 0 12px rgba(0,0,0,0.25);font-family:Arial,sans-serif;">
-  <div id="chatlog" style="max-height:300px;overflow-y:auto;margin-bottom:1rem;color:#2e5939;line-height:1.5;">
-    <div><strong>Bot:</strong> Hello and welcome to your awakening journey 🌿<br>Before we begin, may I know your name?</div>
-  </div>
-  <input type="text" id="questionInput" placeholder="Type your message here..." style="width:75%;padding:0.5rem;border:1px solid #ccc;border-radius:4px;" />
-  <button onclick="handleMessage()" style="padding:0.5rem 1rem;background:#2e5939;color:white;border:none;border-radius:4px;font-weight:bold;transition:0.3s ease;">Send</button>
-</div>
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Send } from "lucide-react";
 
-<script>
-let userName = "";
-let initialized = false;
-const responses = {
-  "what is ancientmind": "AncientMind Elixir is a revolutionary supplement inspired by ancient Egyptian wisdom. It helps you awaken the pineal gland — your 'third eye'.",
-  "how do i take": "Super simple: just one capsule a day, whenever you remember. Morning, night — what matters is consistency 💊",
-  "how long to see results": "Some feel something in 24–48 hours. But the real magic unfolds with daily use over weeks. Trust the process 🌿",
-  "side effects": "Not side effects, soul effects ✨ Dreams, clarity, energy — all part of waking up to your true self.",
-  "pineal gland": "Think of it like your spiritual antenna. AncientMind detoxes, decalcifies and reactivates it 🔮",
-  "why is pineal calcified": "Fluoride, stress, processed food... It all blocks your connection. But you can reverse it. We’re here for that!",
-  "difference from other supplements": "This is based on real ancient Egyptian texts + modern science. Rare ingredients. Precise formula. Real results.",
-  "experiences": "Users share stories of peace, clarity, vivid dreams, energy, synchronicities... it’s a true awakening journey 🧘‍♀️",
-  "weird dreams": "Totally normal (and awesome). That means your mind is tuning into higher frequencies 🌌",
-  "financial help": "Clear mind, sharp intuition. Better decisions, unexpected doors opening. Not magic — just alignment 💸",
-  "cancel": "Hey, I get it. But before you decide, can you share why? Most people who hesitated ended up grateful they didn’t give up 🌟",
-  "refund": "Let’s troubleshoot together. Been taking it daily? Avoiding fluoride? Many see change after 30–45 days. You have time, and I’m here 💚",
-  "expensive": "Compared to retreats, therapies and courses... this is a fraction. And the ingredients? Rare, potent, priceless. It’s your transformation 🙌",
-  "shipping": "We ship within 24h. Delivery: US 5–7 days, CA 7–10, EU 10–15. Tracking comes by email 📦",
-  "medications": "It’s 100% natural 🌱 But always check with your doc if you're on meds — many users actually reduced theirs over time.",
-  "guarantee": "Yep — 180 days. That’s 6 months of testing with peace of mind. We believe in this, deeply.",
-  "signs of activation": "Dreams. Intuition. Flow. Synchronicities. That ‘knowing’ feeling. It’s subtle at first... then undeniable ✨",
-  "family": "Absolutely. Kids, teens, adults — all safe. Especially powerful before the pineal is fully calcified 🌞",
-  "stop taking": "You’ll still keep some benefits, but in our modern toxic world, regular use keeps your clarity alive."
-};
+const faq = [
+  {
+    keywords: ["what is", "what exactly is", "what's this", "about ancientmind"],
+    answer:
+      "🌿 AncientMind Elixir is a revolutionary supplement based on authentic Egyptian manuscripts. It contains rare ingredients specifically chosen to decalcify and reactivate your pineal gland — the 'third eye' — blending ancient wisdom with modern neuroscience to unlock your true mental and spiritual potential."
+  },
+  {
+    keywords: ["how to take", "how do i take", "dosage", "instructions", "when should i take", "how many capsules"],
+    answer:
+      "✨ It's very simple! Take just 1 capsule per day, at any convenient time. There's no need for food or specific timing. What truly matters is daily consistency. Within days, you'll start noticing deeper sleep, sharper clarity, and more energy."
+  },
+  {
+    keywords: ["how long", "results", "when", "see effects", "does it work", "how fast"],
+    answer:
+      "⏳ Many users feel changes within 24-48 hours, especially in sleep and mental clarity. For deeper and lasting transformation, we recommend continuous use for at least 90 days to allow complete pineal decalcification."
+  },
+  {
+    keywords: ["side effects", "is it safe", "does it work", "natural", "is this safe", "any problems"],
+    answer:
+      "🌸 AncientMind Elixir is 100% natural, vegan, and allergen-free. The only 'effects' you'll likely experience are positive: vivid dreams, enhanced intuition, and meaningful synchronicities — signs your pineal gland is awakening."
+  },
+  {
+    keywords: ["refund", "cancel order", "want to cancel", "money back", "return", "how to get refund"],
+    answer:
+      "💬 Before we proceed with your cancellation, may I understand what's bothering you? We offer a 180-day guarantee because transformations take time. Many customers who doubted at first ended up becoming advocates after real results. May I guide you to maximize your experience first?"
+  },
+  {
+    keywords: ["dreams", "weird dreams", "vivid dreams", "strange dreams"],
+    answer:
+      "🌌 Yes! Vivid, intense dreams are one of the first signs your pineal gland is reactivating. Many people report prophetic or symbolic dreams. It's a natural part of reconnecting with your higher consciousness."
+  },
+  {
+    keywords: ["intuition", "spiritual", "connection", "manifest", "energy"],
+    answer:
+      "🔮 As your pineal gland awakens, you may feel stronger intuition, deeper spiritual awareness, and powerful synchronicities. You're aligning with your true self and the universe's flow."
+  },
+  {
+    keywords: ["can it help", "money", "success", "abundance", "financial"],
+    answer:
+      "💰 While we can't promise specific financial results, many users report improved decision-making and attracting unexpected opportunities as their intuition sharpens. Abundance often follows clarity."
+  },
+  {
+    keywords: ["ingredients", "what's inside", "what are the ingredients"],
+    answer:
+      "🌿 Our formula includes rare, pharmaceutical-grade herbs and minerals chosen to detoxify, decalcify, and reactivate your pineal gland — inspired by ancient Egyptian manuscripts."
+  },
+  {
+    keywords: ["pineal gland", "third eye", "activate pineal", "how it works"],
+    answer:
+      "🧠 AncientMind works in three phases: detoxification (removing toxins and fluoride), decalcification (breaking down deposits), and reactivation (enhancing your pineal's electromagnetic function)."
+  }
+];
 
-function animateMessage(content, from = 'bot') {
-  const el = document.createElement('div');
-  el.className = 'message';
-  el.style.opacity = 0;
-  el.innerHTML = `<strong>${from === 'bot' ? 'Bot' : 'You'}:</strong> ${content}`;
-  document.getElementById("chatlog").appendChild(el);
-  setTimeout(() => el.style.opacity = 1, 100);
+function getSuzieResponse(userInput) {
+  const input = userInput.toLowerCase();
+  for (const item of faq) {
+    if (item.keywords.some(keyword => input.includes(keyword))) {
+      return item.answer + "\n\nI'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.";
+    }
+  }
+  return "🌟 That's a beautiful question. I sense something deeper behind your words. Would you mind sharing a bit more so I can guide you with all the care and insight you deserve?";
 }
 
-function handleMessage() {
-  const input = document.getElementById("questionInput");
-  const message = input.value.trim();
-  if (!message) return;
-  animateMessage(message, 'user');
-  input.value = "";
+export default function SuzieChat() {
+  const [messages, setMessages] = useState([
+    {
+      sender: "suzie",
+      text: "Hello awakened soul! 🌿 I'm Suzie, your guide in this journey with AncientMind Elixir. Have you taken your first capsule today? I'm here to help with any questions or rituals you may need."
+    }
+  ]);
+  const [input, setInput] = useState("");
 
-  if (!initialized) {
-    userName = message.split(" ")[0];
-    animateMessage(`Hey ${userName} 👋 So happy to have you here. Ask me anything about your journey with AncientMind Elixir.`, 'bot');
-    initialized = true;
-  } else {
-    const response = getResponse(message);
-    animateMessage(response, 'bot');
-  }
+  const sendMessage = () => {
+    if (!input.trim()) return;
+    const userMessage = { sender: "user", text: input };
+    const suzieMessage = { sender: "suzie", text: getSuzieResponse(input) };
+    setMessages([...messages, userMessage, suzieMessage]);
+    setInput("");
+  };
 
-  const log = document.getElementById("chatlog");
-  log.scrollTop = log.scrollHeight;
+  return (
+    <div className="h-screen w-full bg-black text-white flex flex-col items-center justify-center p-4" style={{ backgroundColor: '#013220' }}>
+      <Card className="w-full max-w-xl h-5/6 flex flex-col justify-between border-white border-opacity-20">
+        <CardContent className="overflow-y-auto p-4 space-y-4">
+          {messages.map((msg, index) => (
+            <div key={index} className={`flex ${msg.sender === "suzie" ? "justify-start" : "justify-end"}`}>
+              <div className={`rounded-2xl p-3 max-w-sm shadow-md ${msg.sender === "suzie" ? "bg-white text-black" : "bg-green-900 text-white"}`}>
+                {msg.text}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+        <div className="flex items-center border-t border-white border-opacity-20 p-4">
+          <Input
+            className="flex-grow bg-white text-black rounded-2xl px-4 py-2"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your message..."
+            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          />
+          <Button className="ml-2 bg-white text-green-900 rounded-2xl" onClick={sendMessage}>
+            <Send className="h-5 w-5" />
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
 }
-
-function getResponse(msg) {
-  msg = msg.toLowerCase();
-  for (let keyword in responses) {
-    if (msg.includes(keyword)) return responses[keyword] + "<br><br><strong>I'm here to support you on your awakening journey. Let’s take this step together 🌟</strong>";
-  }
-  return "Hmm, not sure I got that. Can you rephrase it for me? I’m all ears 💫";
-}
-</script>
-
-<style>
-  .message {
-    margin: 0.5rem 0;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-  }
-</style>
