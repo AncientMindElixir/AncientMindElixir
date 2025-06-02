@@ -1,9 +1,10 @@
 <div id="chat-container" style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif;">
-  <h2 style="color: white; text-align: center;">Chat Suzie</h2>
+  <h2 style="color: white; text-align: center;">Suzie Chat</h2>
   <div id="chat" style="height: 400px; overflow-y: auto; background-color: #f0f0f0; padding: 10px; border-radius: 10px;"></div>
-  <input type="text" id="userInput" placeholder="Digite sua mensagem..." style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+  <input type="text" id="userInput" placeholder="Type your message..." style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc;" />
 </div>
 
+<!-- SCRIPT -->
 <script>
   const chat = document.getElementById("chat");
   const input = document.getElementById("userInput");
@@ -627,7 +628,7 @@
     const clean = normalize(message);
     for (const item of responses) {
       if (item.keywords.some(k => clean.includes(k))) {
-        return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived";
+        return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.";
       }
     }
     return "🌟 That's a beautiful question. Could you tell me a bit more so I can guide you better?";
