@@ -1,12 +1,16 @@
+<div id="chat-container" style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif;">
+  <h2 style="color: white; text-align: center;">Chat Suzie</h2>
+  <div id="chat" style="height: 400px; overflow-y: auto; background-color: #f0f0f0; padding: 10px; border-radius: 10px;"></div>
+  <input type="text" id="userInput" placeholder="Digite sua mensagem..." style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #ccc;" />
+</div>
+
 <script>
- const chat = document.getElementById("chat");
- const input = document.getElementById("userInput");
+  const chat = document.getElementById("chat");
+  const input = document.getElementById("userInput");
 
+  const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
- const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-
- const responses = [
+  const responses = [
    {
      keywords: [
  "what is ancientmind",
@@ -619,31 +623,27 @@
      answer: "🔮 These are signs your connection is growing stronger. Trust the signs — you're aligning with your higher self."
    }
  ];
+  function getSuzieResponse(message) {
+    const clean = normalize(message);
+    for (const item of responses) {
+      if (item.keywords.some(k => clean.includes(k))) {
+        return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived";
+      }
+    }
+    return "🌟 That's a beautiful question. Could you tell me a bit more so I can guide you better?";
+  }
 
+  function sendMessage() {
+    const userText = input.value.trim();
+    if (!userText) return;
+    chat.innerHTML += `<div style="text-align: right;"><div style="background: #0f5132; color: white; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block;">${userText}</div></div>`;
+    const response = getSuzieResponse(userText);
+    chat.innerHTML += `<div style="background: white; color: black; padding: 10px; border-radius: 15px; margin-bottom: 10px; max-width: 80%;">${response}</div>`;
+    chat.scrollTop = chat.scrollHeight;
+    input.value = "";
+  }
 
- function getSuzieResponse(message) {
-   const clean = normalize(message);
-   for (const item of responses) {
-     if (item.keywords.some(k => clean.includes(k))) {
-       return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived";
-     }
-   }
-   return "🌟 That's a beautiful question. Could you tell me a bit more so I can guide you better?";
- }
-
-
- function sendMessage() {
-   const userText = input.value.trim();
-   if (!userText) return;
-   chat.innerHTML += `<div style="text-align: right;"><div style="background: #0f5132; color: white; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block;">${userText}</div></div>`;
-   const response = getSuzieResponse(userText);
-   chat.innerHTML += `<div style="background: white; color: black; padding: 10px; border-radius: 15px; margin-bottom: 10px; max-width: 80%;">${response}</div>`;
-   chat.scrollTop = chat.scrollHeight;
-   input.value = "";
- }
-
-
- input.addEventListener("keydown", function (e) {
-   if (e.key === "Enter") sendMessage();
- });
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") sendMessage();
+  });
 </script>
