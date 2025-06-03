@@ -3,15 +3,16 @@
   <div id="chat" style="height: 400px; overflow-y: auto; background-color: #ffffff; padding: 10px; border-radius: 10px; color: black; border: 1px solid #0f5132;"></div>
   <div style="display: flex; margin-top: 10px;">
     <input type="text" id="userInput" placeholder="Type your message..." style="flex: 1; padding: 10px; border-radius: 5px 0 0 5px; border: 1px solid #0f5132; background-color: #fff; color: black;" />
-    <button onclick="sendMessage()" style="background-color: #0f5132; color: white; border: none; padding: 10px 20px; border-radius: 0 5px 5px 0; cursor: pointer;">Send</button>
+    <button id="sendButton" style="background-color: #0f5132; color: white; border: none; padding: 10px 20px; border-radius: 0 5px 5px 0; cursor: pointer;">Send</button>
   </div>
 </div>
 
 <script>
   const chat = document.getElementById("chat");
   const input = document.getElementById("userInput");
+  const button = document.getElementById("sendButton");
 
-  const normalize = text => text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   const responses = [
    {
@@ -653,31 +654,43 @@
     const clean = normalize(message);
     for (const item of responses) {
       if (item.keywords.some(k => clean.includes(k))) {
-        return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.";
+        return item.answer + "<br><br>I'm here to support you on your awakening journey.";
       }
     }
-    return "✩ That's a beautiful question. Could you tell me a bit more so I can guide you better?";
+    return "\u2729 That's a beautiful question. Could you tell me a bit more so I can guide you better?";
+  }
+
+  function appendMessage(text, from = "user") {
+    const align = from === "user" ? "right" : "left";
+    const bgColor = from === "user" ? "#0f5132" : "#e8f5e9";
+    const textColor = from === "user" ? "white" : "black";
+    chat.innerHTML += `<div style="text-align: ${align};">
+      <div style="background: ${bgColor}; color: ${textColor}; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block; max-width: 80%; word-wrap: break-word;">
+        ${text}
+      </div>
+    </div>`;
+    chat.scrollTop = chat.scrollHeight;
   }
 
   function sendMessage() {
     const userText = input.value.trim();
     if (!userText) return;
-    chat.innerHTML += `<div style="text-align: right;"><div style="background: #0f5132; color: white; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block; max-width: 80%; word-wrap: break-word;">${userText}</div></div>`;
+    appendMessage(userText, "user");
     input.value = "";
     setTimeout(() => {
       const response = getSuzieResponse(userText);
-      chat.innerHTML += `<div style="text-align: left;"><div style="background: #e8f5e9; color: black; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block; max-width: 80%; word-wrap: break-word;">${response}</div></div>`;
-      chat.scrollTop = chat.scrollHeight;
-    }, 1200);
+      appendMessage(response, "bot");
+    }, 1000);
   }
 
-  input.addEventListener("keydown", function (e) {
+  input.addEventListener("keydown", e => {
     if (e.key === "Enter") sendMessage();
   });
 
+  button.addEventListener("click", sendMessage);
+
   window.onload = () => {
-    chat.innerHTML += `<div style="text-align: left;"><div style="background: #e8f5e9; color: black; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block; max-width: 80%; word-wrap: break-word;">
-      👋 Hello! I'm Suzie, your guide on this awakening journey. What's your name?
-    </div></div>`;
+    appendMessage("\ud83d\udc4b Hello! I'm Suzie, your guide on this awakening journey. What's your name?", "bot");
   };
 </script>
+
