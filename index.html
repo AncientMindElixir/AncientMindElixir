@@ -85,11 +85,14 @@
    </div>
  </div>
 
+
  <script>
    const chat = document.getElementById("chat");
    const input = document.getElementById("userInput");
 
+
    const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
 
    const responses = [
   {
@@ -97,11 +100,11 @@
       "what is ancientmind",
       "What exactly is AncientMind Elixir?",
       "what is this product",
-      "what's this elixir",
+      "what is this elixir",
       "what is it for",
       "about ancientmind elixir",
       "what does it do",
-      "what's the purpose",
+      "what is the purpose",
       "what’s the benefit",
       "how does ancientmind work",
       "third eye activation",
@@ -128,7 +131,7 @@
       "how to take",
       "How should I take AncientMind Elixir?",
       "how do i take",
-      "what's the dosage",
+      "what is the dosage",
       "daily dosage",
       "how many capsules",
       "how often",
@@ -281,11 +284,11 @@
       "difference between ancientmind and others",
       "how is this different",
       "why is ancientmind unique",
-      "What's the difference between AncientMind and other pineal supplements?",
+      "What is the difference between AncientMind and other pineal supplements?",
       "is it better than other supplements",
       "what makes this special",
       "why choose ancientmind",
-      "what's different about this",
+      "what is different about this",
       "unique formula",
       "egyptian manuscript",
       "real ancient recipe",
@@ -409,17 +412,18 @@
 {
   keywords: ["thank you", "thanks", "appreciate it", "grateful", "thank you suzie"],
   answer: "You're welcome! ✨ I'm honored to be part of your transformation journey. Keep going, your awakening is unfolding beautifully."
-},
-
+}
+]; //
    function getSuzieResponse(message) {
      const clean = normalize(message);
      for (const item of responses) {
-       if (item.keywords.some(k => clean.includes(normalize(k)))) {
+       if (item.keywords.some(k => clean.includes(k))) {
          return item.answer;
        }
      }
-     return "✹ That's a great question! Could you please clarify so I can better assist you?";
-   },
+     return "\u2739 That's a great question! Could you please clarify so I can better assist you?";
+   }
+
 
    function appendMessage(text, sender) {
      const div = document.createElement("div");
@@ -427,7 +431,8 @@
      div.innerHTML = text;
      chat.appendChild(div);
      chat.scrollTop = chat.scrollHeight;
-   },
+   }
+
 
    function sendMessage() {
      const userText = input.value.trim();
@@ -438,16 +443,16 @@
        const response = getSuzieResponse(userText);
        appendMessage(response, "suzie");
      }, 1000);
-   },
+   }
+
 
    input.addEventListener("keydown", function (e) {
      if (e.key === "Enter") sendMessage();
-   }),
+   });
 
    window.addEventListener('load', () => {
-     appendMessage("👋 Hello! I'm Suzie, your guide on this awakening journey. What's your name?", "suzie");
-   });
- </script>
-</body>
-</html>
+  if (typeof appendMessage === 'function') {
+    appendMessage("👋 Hello! I'm Suzie, your guide on this awakening journey. What's your name?", "suzie");
+  }
+});
 
