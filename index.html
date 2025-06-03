@@ -1,122 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Suzie Chat</title>
-  <style>
-    body {
-      background-color: #000;
-      font-family: Arial, sans-serif;
-      color: white;
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
-    #chat-container {
-      max-width: 600px;
-      width: 100%;
-      background-color: #000;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    }
-    h2 {
-      color: white;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    #chat {
-      height: 400px;
-      overflow-y: auto;
-      background-color: #1a1a1a;
-      padding: 10px;
-      border-radius: 10px;
-    }
-    .message {
-      margin: 10px 0;
-      max-width: 80%;
-      padding: 10px;
-      border-radius: 15px;
-      display: inline-block;
-    }
-    .user {
-      background: #0f5132;
-      color: white;
-      align-self: flex-end;
-      text-align: right;
-    }
-    .suzie {
-      background: white;
-      color: black;
-      align-self: flex-start;
-    }
-    #userInput {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 5px;
-      border: 1px solid #0f5132;
-      background-color: #fff;
-      color: black;
-    }
-  </style>
-</head>
-<body>
-<div id="chat-container">
-  <h2>Suzie Chat</h2>
-  <div id="chat"></div>
-  <input type="text" id="userInput" placeholder="Type your message...">
+<div id="chat-container" style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #fff; border-radius: 15px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+  <h2 style="color: white; background-color: #0f5132; text-align: center; margin-bottom: 10px; padding: 10px; border-radius: 10px;">Suzie Chat</h2>
+  <div id="chat" style="height: 400px; overflow-y: auto; background-color: #ffffff; padding: 10px; border-radius: 10px; color: black; border: 1px solid #0f5132;"></div>
+  <div style="display: flex; margin-top: 10px;">
+    <input type="text" id="userInput" placeholder="Type your message..." style="flex: 1; padding: 10px; border-radius: 5px 0 0 5px; border: 1px solid #0f5132; background-color: #fff; color: black;" />
+    <button onclick="sendMessage()" style="background-color: #0f5132; color: white; border: none; padding: 10px 20px; border-radius: 0 5px 5px 0; cursor: pointer;">Send</button>
+  </div>
 </div>
 
 <script>
   const chat = document.getElementById("chat");
   const input = document.getElementById("userInput");
-  let userName = null;
 
-  const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const normalize = text => text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
-  function appendMessage(content, type = 'suzie') {
-    const div = document.createElement('div');
-    div.className = `message ${type}`;
-    div.innerHTML = content;
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
-  }
-
-  function sendMessage() {
-    const userText = input.value.trim();
-    if (!userText) return;
-    appendMessage(userText, 'user');
-    input.value = "";
-
-    if (!userName) {
-      userName = userText;
-      setTimeout(() => {
-        appendMessage(`Nice to meet you, <b>${userName}</b>! 🌟 Ask me anything about AncientMind Elixir, pineal activation, or how to unlock your true potential.`);
-      }, 1000);
-      return;
-    }
-
-    const clean = normalize(userText);
-    const match = responses.find(r => r.keywords.some(k => clean.includes(k)));
-    const response = match ? match.answer + `<br><br>I'm here to support you on your awakening journey, ${userName}.` : `✩ That's a beautiful question, ${userName}. Could you tell me a bit more so I can guide you better?`;
-
-    setTimeout(() => appendMessage(response), 1200);
-  }
-
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") sendMessage();
-  });
-
-  window.onload = () => {
-    appendMessage("👋 Hello! I'm Suzie, your guide on this awakening journey. First, what's your name?");
-  }
-
-  const responses =  [
+  const responses = [
    {
      keywords: [
  "what is ancientmind",
+“What exactly is AncientMind Elixir?",
  "what is this product",
  "what's this elixir",
  "what is it for",
@@ -142,11 +43,12 @@
  "what’s in the elixir",
  "egyptian wisdom"
 ],
-     answer: "🌿 AncientMind Elixir is a revolutionary supplement based on ancient formulas discovered in Egyptian manuscripts. It contains rare ingredients specifically formulated to decalcify and reactivate your pineal gland, what the ancients called the third eye This unique formula combines millennial wisdom with modern neuroscience to unlock your true mental and spiritual potential."
+     answer: "🌿 AncientMind Elixir is a revolutionary supplement based on ancient formulas discovered in Egyptian manuscripts. It contains rare ingredients specifically formulated to decalcify and reactivate your pineal gland, what the ancients called the third eye. This unique formula combines millennial wisdom with modern neuroscience to unlock your true mental and spiritual potential."
    },
    {
      keywords: [
  "how to take",
+“How should I take AncientMind Elixir?",
  "how do i take",
  "what's the dosage",
  "daily dosage",
@@ -183,6 +85,7 @@
  "how long to work",
  "how long to notice",
  "do results appear fast",
+“How long does it take to see results?",
  "when will it work",
  "24-48 hours",
  "first week",
@@ -201,6 +104,7 @@
      keywords: [
  "side effects",
  "is it safe",
+“Does the product have side effects?",
  "any risks",
  "is this safe to take",
  "can it cause problems",
@@ -231,6 +135,7 @@
  "how does it decalcify",
  "how it works",
  "how does it work",
+“How does the product decalcify the pineal gland?",
  "pineal gland decalcify",
  "how does this clean pineal",
  "what does it do to pineal",
@@ -261,6 +166,7 @@
  "what causes calcification",
  "what calcifies pineal",
  "how pineal becomes calcified",
+“Why does the pineal gland become calcified?",
  "pineal damage",
  "pineal dysfunction",
  "fluoride pineal gland",
@@ -287,6 +193,7 @@
  "difference between ancientmind and others",
  "how is this different",
  "why is ancientmind unique",
+“What's the difference between AncientMind and other pineal supplements?",
  "is it better than other supplements",
  "what makes this special",
  "why choose ancientmind",
@@ -316,6 +223,7 @@
  "what will i feel",
  "what can i expect",
  "experiences with ancientmind",
+“What kind of experiences can I expect?",
  "what happens after taking",
  "user results",
  "what results",
@@ -348,6 +256,7 @@
  "weird sensations",
  "strange effects",
  "unusual experiences",
+“Is it normal to feel different or have strange dreams?",
  "strange dreams",
  "weird dreams",
  "vivid dreams",
@@ -375,6 +284,7 @@
        keywords: [
  "can it help with money",
  "does it help financially",
+“Can the product help me financially?",
  "attract abundance",
  "will i get rich",
  "can i manifest money",
@@ -406,6 +316,7 @@
  "too good to be true",
  "i don't believe this",
  "is this real",
+"This sounds too good to be true...",
  "seems fake",
  "sounds like a scam",
  "is it true",
@@ -433,6 +344,7 @@
        keywords: [
  "i don't believe in conspiracy",
  "conspiracy theory",
+"I don't believe in conspiracy theories...",
  "is this a conspiracy",
  "sounds like a theory",
  "mkultra",
@@ -461,6 +373,7 @@
        keywords: [
  "i've tried everything",
  "nothing worked for me",
+"I've tried meditation, ayahuasca, therapies... nothing worked",
  "ayahuasca didn't help",
  "therapy didn't work",
  "meditation failed",
@@ -492,6 +405,7 @@
  "how do i cancel",
  "request refund",
  "i changed my mind",
+"I want to cancel my order",
  "stop my purchase",
  "don't want anymore",
  "cancel subscription",
@@ -516,6 +430,7 @@
  "didn't work for me",
  "i saw no results",
  "this product doesn't work",
+"The product didn't work for me, I want a refund",
  "want my money back",
  "asking for a refund",
  "refund request",
@@ -542,6 +457,7 @@
  "too expensive",
  "price is high",
  "can't afford",
+"The product is too expensive",
  "costs too much",
  "not cheap",
  "is it worth the price",
@@ -566,6 +482,7 @@
        keywords: [
  "when will i receive",
  "delivery time",
+"When will I receive my order?",
  "how long to arrive",
  "when does it ship",
  "shipping status",
@@ -605,6 +522,7 @@
  "safe with medical treatment",
  "use with drugs",
  "natural supplement with medicine",
+"Can I take it with other medications?",
  "take with other supplements",
  "safe with prescriptions",
  "compatibility with medications",
@@ -624,6 +542,7 @@
        keywords: [
  "is there a guarantee",
  "do you offer refund",
+"Is there a guarantee?",
  "how long is the guarantee",
  "money-back guarantee",
  "return policy",
@@ -649,6 +568,7 @@
  "how do i know it's working",
  "pineal activation signs",
  "is my third eye opening",
+"How do I know if my pineal is actually activating?",
  "how to know if pineal is activating",
  "symptoms of pineal activation",
  "signs my pineal is active",
@@ -677,6 +597,7 @@
  "is it safe for kids",
  "can children use it",
  "teenagers use ancientmind",
+"Can I give it to my family?",
  "safe for my son",
  "can my daughter take it",
  "give to partner",
@@ -702,6 +623,7 @@
  "can i stop taking it",
  "do i need to take forever",
  "effects after stopping",
+"What happens if I stop taking it?",
  "will benefits go away",
  "if i stop will i lose progress",
  "is it okay to stop",
@@ -727,6 +649,35 @@
    }
  ];
 
+  function getSuzieResponse(message) {
+    const clean = normalize(message);
+    for (const item of responses) {
+      if (item.keywords.some(k => clean.includes(k))) {
+        return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.";
+      }
+    }
+    return "✩ That's a beautiful question. Could you tell me a bit more so I can guide you better?";
+  }
+
+  function sendMessage() {
+    const userText = input.value.trim();
+    if (!userText) return;
+    chat.innerHTML += `<div style="text-align: right;"><div style="background: #0f5132; color: white; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block; max-width: 80%; word-wrap: break-word;">${userText}</div></div>`;
+    input.value = "";
+    setTimeout(() => {
+      const response = getSuzieResponse(userText);
+      chat.innerHTML += `<div style="text-align: left;"><div style="background: #e8f5e9; color: black; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block; max-width: 80%; word-wrap: break-word;">${response}</div></div>`;
+      chat.scrollTop = chat.scrollHeight;
+    }, 1200);
+  }
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") sendMessage();
+  });
+
+  window.onload = () => {
+    chat.innerHTML += `<div style="text-align: left;"><div style="background: #e8f5e9; color: black; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block; max-width: 80%; word-wrap: break-word;">
+      👋 Hello! I'm Suzie, your guide on this awakening journey. What's your name?
+    </div></div>`;
+  };
 </script>
-</body>
-</html>
