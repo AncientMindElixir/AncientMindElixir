@@ -41,17 +41,19 @@
       padding: 10px;
       border-radius: 15px;
       word-wrap: break-word;
+      display: inline-block;
+      clear: both;
     }
     .user {
-      background-color: #0f5132;
-      color: white;
-      align-self: flex-end;
+      background-color: #dcf8c6;
+      color: #000;
+      float: right;
       text-align: right;
     }
     .suzie {
-      background-color: #e8f5e9;
-      color: black;
-      align-self: flex-start;
+      background-color: #f1f0f0;
+      color: #000;
+      float: left;
       text-align: left;
     }
     #input-area {
@@ -93,8 +95,8 @@
    {
      keywords: [
  "what is ancientmind",
-“What exactly is AncientMind Elixir?",
- "what is this product",
+"What exactly is AncientMind Elixir?", 
+"what is this product",
  "what's this elixir",
  "what is it for",
  "about ancientmind elixir",
@@ -124,7 +126,7 @@
    {
      keywords: [
  "how to take",
-“How should I take AncientMind Elixir?",
+"How should I take AncientMind Elixir?",
  "how do i take",
  "what's the dosage",
  "daily dosage",
@@ -161,7 +163,7 @@
  "how long to work",
  "how long to notice",
  "do results appear fast",
-“How long does it take to see results?",
+"How long does it take to see results?",
  "when will it work",
  "24-48 hours",
  "first week",
@@ -180,7 +182,7 @@
      keywords: [
  "side effects",
  "is it safe",
-“Does the product have side effects?",
+"Does the product have side effects?",
  "any risks",
  "is this safe to take",
  "can it cause problems",
@@ -211,7 +213,7 @@
  "how does it decalcify",
  "how it works",
  "how does it work",
-“How does the product decalcify the pineal gland?",
+"How does the product decalcify the pineal gland?",
  "pineal gland decalcify",
  "how does this clean pineal",
  "what does it do to pineal",
@@ -242,7 +244,7 @@
  "what causes calcification",
  "what calcifies pineal",
  "how pineal becomes calcified",
-“Why does the pineal gland become calcified?",
+"Why does the pineal gland become calcified?",
  "pineal damage",
  "pineal dysfunction",
  "fluoride pineal gland",
@@ -269,7 +271,7 @@
  "difference between ancientmind and others",
  "how is this different",
  "why is ancientmind unique",
-“What's the difference between AncientMind and other pineal supplements?",
+"What's the difference between AncientMind and other pineal supplements?",
  "is it better than other supplements",
  "what makes this special",
  "why choose ancientmind",
@@ -299,7 +301,7 @@
  "what will i feel",
  "what can i expect",
  "experiences with ancientmind",
-“What kind of experiences can I expect?",
+"What kind of experiences can I expect?",
  "what happens after taking",
  "user results",
  "what results",
@@ -332,7 +334,7 @@
  "weird sensations",
  "strange effects",
  "unusual experiences",
-“Is it normal to feel different or have strange dreams?",
+"Is it normal to feel different or have strange dreams?",
  "strange dreams",
  "weird dreams",
  "vivid dreams",
@@ -360,7 +362,7 @@
        keywords: [
  "can it help with money",
  "does it help financially",
-“Can the product help me financially?",
+"Can the product help me financially?",
  "attract abundance",
  "will i get rich",
  "can i manifest money",
@@ -732,7 +734,7 @@
           return item.answer;
         }
       }
-      return "✩ That's a great question! Could you please clarify so I can better assist you?";
+      return "\u2739 That's a great question! Could you please clarify so I can better assist you?";
     }
 
     function appendMessage(text, sender) {
@@ -758,10 +760,9 @@
       if (e.key === "Enter") sendMessage();
     });
 
-    // Greeting on load
-    window.onload = () => {
-      appendMessage("👋 Hello! I'm Suzie, your guide on this awakening journey. What's your name?", "suzie");
-    };
+    window.addEventListener('load', () => {
+      appendMessage("\ud83d\udc4b Hello! I'm Suzie, your guide on this awakening journey. What's your name?", "suzie");
+    });
   </script>
 </body>
 </html>
