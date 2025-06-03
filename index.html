@@ -1,16 +1,119 @@
-<div id="chat-container" style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; background-color: #000; border-radius: 15px; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
-  <h2 style="color: #0f5132; text-align: center; margin-bottom: 10px;">Suzie Chat</h2>
-  <div id="chat" style="height: 400px; overflow-y: auto; background-color: #1a1a1a; padding: 10px; border-radius: 10px; color: white;"></div>
-  <input type="text" id="userInput" placeholder="Type your message..." style="width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #0f5132; background-color: #fff; color: black;" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suzie Chat</title>
+  <style>
+    body {
+      background-color: #000;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    #chat-container {
+      max-width: 600px;
+      width: 100%;
+      background-color: #000;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    h2 {
+      color: white;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    #chat {
+      height: 400px;
+      overflow-y: auto;
+      background-color: #1a1a1a;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .message {
+      margin: 10px 0;
+      max-width: 80%;
+      padding: 10px;
+      border-radius: 15px;
+      display: inline-block;
+    }
+    .user {
+      background: #0f5132;
+      color: white;
+      align-self: flex-end;
+      text-align: right;
+    }
+    .suzie {
+      background: white;
+      color: black;
+      align-self: flex-start;
+    }
+    #userInput {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #0f5132;
+      background-color: #fff;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+<div id="chat-container">
+  <h2>Suzie Chat</h2>
+  <div id="chat"></div>
+  <input type="text" id="userInput" placeholder="Type your message...">
 </div>
 
 <script>
   const chat = document.getElementById("chat");
   const input = document.getElementById("userInput");
+  let userName = null;
 
-  const normalize = text => text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const normalize = text => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  const responses = [
+  function appendMessage(content, type = 'suzie') {
+    const div = document.createElement('div');
+    div.className = `message ${type}`;
+    div.innerHTML = content;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function sendMessage() {
+    const userText = input.value.trim();
+    if (!userText) return;
+    appendMessage(userText, 'user');
+    input.value = "";
+
+    if (!userName) {
+      userName = userText;
+      setTimeout(() => {
+        appendMessage(`Nice to meet you, <b>${userName}</b>! 🌟 Ask me anything about AncientMind Elixir, pineal activation, or how to unlock your true potential.`);
+      }, 1000);
+      return;
+    }
+
+    const clean = normalize(userText);
+    const match = responses.find(r => r.keywords.some(k => clean.includes(k)));
+    const response = match ? match.answer + `<br><br>I'm here to support you on your awakening journey, ${userName}.` : `✩ That's a beautiful question, ${userName}. Could you tell me a bit more so I can guide you better?`;
+
+    setTimeout(() => appendMessage(response), 1200);
+  }
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") sendMessage();
+  });
+
+  window.onload = () => {
+    appendMessage("👋 Hello! I'm Suzie, your guide on this awakening journey. First, what's your name?");
+  }
+
+  const responses =  [
    {
      keywords: [
  "what is ancientmind",
@@ -624,34 +727,6 @@
    }
  ];
 
-  function getSuzieResponse(message) {
-    const clean = normalize(message);
-    for (const item of responses) {
-      if (item.keywords.some(k => clean.includes(k))) {
-        return item.answer + "<br><br>I'm here to support you on your awakening journey. Our mission is your complete transformation, and we won't rest until you experience the benefits thousands have already lived.";
-      }
-    }
-    return "✩ That's a beautiful question. Could you tell me a bit more so I can guide you better?";
-  }
-
-  function sendMessage() {
-    const userText = input.value.trim();
-    if (!userText) return;
-    chat.innerHTML += `<div style="text-align: right;"><div style="background: #0f5132; color: white; padding: 10px; border-radius: 15px; margin: 10px 0; display: inline-block;">${userText}</div></div>`;
-    const response = getSuzieResponse(userText);
-    chat.innerHTML += `<div style="background: white; color: black; padding: 10px; border-radius: 15px; margin-bottom: 10px; max-width: 80%;">${response}</div>`;
-    chat.scrollTop = chat.scrollHeight;
-    input.value = "";
-  }
-
-  input.addEventListener("keydown", function (e) {
-    if (e.key === "Enter") sendMessage();
-  });
-
-  // Mensagem inicial de apresentação
-  window.onload = () => {
-    chat.innerHTML += `<div style="background: white; color: black; padding: 10px; border-radius: 15px; margin-bottom: 10px; max-width: 80%;">
-      👋 Hello! I'm Suzie, your guide on this awakening journey. Ask me anything about AncientMind Elixir, pineal activation, or how to experience your full potential.
-    </div>`;
-  }
 </script>
+</body>
+</html>
